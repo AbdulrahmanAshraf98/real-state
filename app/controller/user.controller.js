@@ -42,7 +42,7 @@ class UserController {
 	static deleteUser = async (req, res) => {
 		try {
 			await UserModel.findByIdAndDelete({ _id: req.params.id });
-			helper.resHandler(res, 200, true, user, "user created");
+			helper.resHandler(res, 200, true, null, "user created");
 		} catch (error) {
 			helper.resHandler(res, 500, false, e, e.message);
 		}
