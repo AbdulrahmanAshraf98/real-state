@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const { hash, validatePassword } = require("../../app/helper/crypt");
-const { generateJwtToken } = require("../../app/helper/jwttoken");
+const { hash, validatePassword } = require("../../app/helper/crypt.helper");
+const { generateJwtToken } = require("../../app/helper/jwttoken.helper");
 
 const userSchema = mongoose.Schema(
 	{
