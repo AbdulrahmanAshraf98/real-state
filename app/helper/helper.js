@@ -6,5 +6,12 @@ class Helper {
 			message,
 		});
 	};
+	static catchAsyncError = (cb) => async (req, res, next) => {
+		try {
+			await cb(req, res, next);
+		} catch (error) {
+			Helper.resHandler(res, 500, false, error, error.message);
+		}
+	};
 }
 module.exports = Helper;

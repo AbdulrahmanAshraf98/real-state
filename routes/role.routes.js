@@ -1,15 +1,40 @@
 const router = require("express").Router();
 const roleController = require("../app/controller/role.controller");
+const {
+	auth,
+	restrictTo,
+	checkPermission,
+} = require("../app/middleware/auth.middleware");
 
 router
 	.route("/")
-	.get(roleController.allRoles)
-	.post(roleController.addRole)
-	.delete(roleController.deleteALlRoles);
+	.get(
+		auth,
+		restrictTo("admin", "employee"),
+		checkPermission,
+		roleController.allRoles,
+	)
+	.post(auth, restrictTo("admin"), checkPermission, roleController.addRole)
+	.delete(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.deleteALlRoles,
+	);
 router
 	.route("/:roleName")
-	.get(roleController.getSingleRole)
-	.patch(roleController.editRole)
-	.delete(roleController.deleteRole);
+	.get(
+		auth,
+		restrictTo("admin", "employee"),
+		checkPermission,
+		roleController.getSingleRole,
+	)
+	.patch(auth, restrictTo("admin"), checkPermission, roleController.editRole)
+	.delete(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.deleteRole,
+	);
 
 module.exports = router;
