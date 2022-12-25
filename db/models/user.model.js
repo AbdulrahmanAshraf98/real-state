@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema(
 			maxLength: 20,
 			required: true,
 		},
-		lName: {
+		lname: {
 			type: String,
 			trim: true,
 			lowercase: true,
@@ -29,6 +29,7 @@ const userSchema = mongoose.Schema(
 		email: {
 			type: String,
 			required: true,
+			unique: true,
 			validate: function () {
 				if (!validator.isEmail(this.email)) throw new Error("Invalid email");
 			},
@@ -64,6 +65,7 @@ const userSchema = mongoose.Schema(
 		],
 		role: {
 			type: mongoose.Schema.Types.ObjectId,
+			ref: "Role",
 		},
 	},
 	{
@@ -72,12 +74,13 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre("save", async function () {
-	if (!this.isModified("password")) {
+	if (this.isModified("password")) {
 		this.password = await hash(this.password, 10);
 	}
 });
 userSchema.statics.loginUser = async (email, password) => {
-	const user = User.findOne({ email });
+	const user = await User.findOne({ email });
+	console.log(password);
 	if (!user) return new Error("invalid Email");
 	if (!validatePassword(password, user.password))
 		throw new Error("invalid password");
@@ -87,7 +90,7 @@ userSchema.statics.loginUser = async (email, password) => {
 userSchema.methods.generateToken = async function () {
 	const user = this;
 	const token = generateJwtToken({ _id: user._id });
-	user.tokens.push(token);
+	user.tokens.push({ token });
 	await user.save();
 	return token;
 };

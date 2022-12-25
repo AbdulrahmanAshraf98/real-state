@@ -9,14 +9,18 @@ const roleScheme = mongoose.Schema({
 		maxLength: [20, "role name must be less than 20 characters"],
 		required: [true, "role name is required"],
 	},
+	type: {
+		type: String,
+		trim: true,
+		lowercase: true,
+		enum: ["admin", "employee", "customer"],
+		default: "customer",
+		required: [true, "role name is required"],
+	},
 	urls: [
 		{
 			url: String,
-			methods: [
-				{
-					methodName: String,
-				},
-			],
+			methods: Object,
 		},
 	],
 });
