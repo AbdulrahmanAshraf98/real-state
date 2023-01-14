@@ -8,43 +8,22 @@ const {
 } = require("../app/middleware/auth.middleware");
 
 router.route("/login").post(AuthController.login);
-router.route("/register").get(UserController.register);
 
+
+router.use(auth);
+
+router.route("/me").get(UserController.me);
+router.use(restrictTo("admin", "employee"));
 router
 	.route("/")
-	.get(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		UserController.allUsers,
-	)
-	.post(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		UserController.addUser,
-	);
+	.get(checkPermission, UserController.allUsers)
+	.post(checkPermission, UserController.addUser);
 
 router
 	.route("/:id")
-	.get(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		UserController.getSingleUser,
-	)
-	.patch(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		UserController.editUser,
-	)
-	.delete(
-		auth,
-		restrictTo("admin"),
-		checkPermission,
-		UserController.deleteUser,
-	);
+	.get(checkPermission, UserController.getSingleUser)
+	.patch(checkPermission, UserController.editUser)
+	.delete(restrictTo("admin"), checkPermission, UserController.deleteUser);
 
 
 	

@@ -8,27 +8,12 @@ const {
 
 router
 	.route("/")
-	.get(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		roleController.allRoles,
-	)
+	.get(auth, roleController.allRoles)
 	.post(auth, restrictTo("admin"), checkPermission, roleController.addRole)
-	.delete(
-		auth,
-		restrictTo("admin"),
-		checkPermission,
-		roleController.deleteALlRoles,
-	);
+	.delete(auth, roleController.deleteALlRoles);
 router
 	.route("/:roleName")
-	.get(
-		auth,
-		restrictTo("admin", "employee"),
-		checkPermission,
-		roleController.getSingleRole,
-	)
+	.get(auth, roleController.getSingleRole)
 	.patch(auth, restrictTo("admin"), checkPermission, roleController.editRole)
 	.delete(
 		auth,
@@ -36,5 +21,26 @@ router
 		checkPermission,
 		roleController.deleteRole,
 	);
-
+router
+	.route("/:roleName/newRoleUrl")
+	.post(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.addNewUrlToRole,
+	);
+router
+	.route("/:roleName/method")
+	.post(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.addNewMethodToUrl,
+	)
+	.delete(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.removeMethodFromRole,
+	);
 module.exports = router;

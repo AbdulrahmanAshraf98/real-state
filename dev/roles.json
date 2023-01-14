@@ -1,0 +1,278 @@
+[
+	{
+		"name": "admin",
+		"type": "admin",
+		"urls": [
+			{
+				"url": "/api/v1/role/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"roleName": "roleName"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/role/newRoleUrl",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"roleName": "roleName"
+				},
+				"query": {}
+			},
+
+			{
+				"url": "/api/v1/role/method",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"roleName": "roleName"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/user/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"id": "id"
+				},
+				"query": {}
+			},
+
+			{
+				"url": "/api/v1/payment/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"paymentId": "paymentId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/payment/newPaymentAmount",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"paymentId": "paymentId"
+				},
+				"query": {}
+			},
+
+			{
+				"url": "/api/v1/project/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"projectId": "projectId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/building/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"buildingId": "buildingId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/unit/",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"unitId": "unitId"
+				},
+				"query": {}
+			}
+		]
+	},
+	{
+		"name": "employee-1",
+		"type": "employee",
+		"urls": [
+			{
+				"url": "/api/v1/role/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"roleName": "roleName"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/role/method",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"roleName": "roleName"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/user/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"id": "id"
+				},
+				"query": {}
+			},
+
+			{
+				"url": "/api/v1/payment/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"paymentId": "paymentId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/payment/newPaymentAmount",
+				"methods": {
+					"GET": "GET",
+					"DELETE": "DELETE",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"paymentId": "paymentId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/project/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"projectId": "projectId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/building/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"buildingId": "buildingId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/unit/",
+				"methods": {
+					"GET": "GET",
+					"PATCH": "PATCH",
+					"POST": "POST"
+				},
+				"params": {
+					"unitId": "unitId"
+				},
+				"query": {}
+			}
+		]
+	},
+	{
+		"name": "customer-1",
+		"type": "customer",
+		"urls": [
+			{
+				"url": "/api/v1/payment/",
+				"methods": {
+					"GET": "GET"
+				},
+				"params": {
+					"paymentId": "paymentId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/project/",
+				"methods": {
+					"GET": "GET"
+				},
+				"params": {
+					"projectId": "projectId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/building/",
+				"methods": {
+					"GET": "GET"
+				},
+				"params": {
+					"buildingId": "buildingId"
+				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/unit/",
+				"methods": {
+					"GET": "GET"
+				},
+				"params": {
+					"unitId": "unitId"
+				},
+				"query": {}
+			}
+		]
+	}
+]

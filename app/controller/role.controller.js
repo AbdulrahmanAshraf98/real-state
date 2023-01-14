@@ -1,4 +1,5 @@
 const RoleModel = require("../../db/models/role.model");
+const ArrayHelper = require("../helper/array.helper");
 const Helper = require("../helper/helper");
 const helper = require("../helper/helper");
 
@@ -41,21 +42,40 @@ class RoleController {
 	//under testing
 	static addNewUrlToRole = Helper.catchAsyncError(async (req, res) => {
 		const role = await RoleModel.findOne({ name: req.params.roleName });
-		role.urls.urls.push(req.body);
+
+		role.urls.push(req.body);
 		role.save();
-		helper.resHandler(res, 200, true, "", "all roles deleted");
+		helper.resHandler(res, 200, true, "", "url add to role successfully");
 	});
-	static addNewMethodToRole = Helper.catchAsyncError(async (req, res) => {
-		const role = await RoleModel.findOne({ name: req.params.roleName });
-		role.urls.urls.methods = { ...role._doc.urls.urls.methods, ...req.body };
-		role.save();
-		helper.resHandler(res, 200, true, "", "all roles deleted");
+	static addNewMethodToUrl = Helper.catchAsyncError(async (req, res) => {
+		const urlId = req.body.urlId;
+		const role = await RoleModel.findOne({
+			name: req.params.roleName,
+		});
+		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
+		if (urlIndex < 0) throw new Error("invalid url id");
+		role._doc.urls[urlIndex].methods[req.body.method.toUpperCase()] =
+			req.body.method.toUpperCase();
+		await role.save();
+		helper.resHandler(res, 200, true, role, "method add to  url successfully");
 	});
 	static removeMethodFromRole = Helper.catchAsyncError(async (req, res) => {
-		const role = await RoleModel.findOne({ name: req.params.roleName });
-		delete role.urls.urls.methods.methods[req.body.methodName];
-		role.save();
-		helper.resHandler(res, 200, true, "", "all roles deleted");
+		const urlId = req.body.urlId;
+		const role = await RoleModel.findOne({
+			name: req.params.roleName,
+		});
+		console.log(role);
+		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
+		if (urlIndex < 0) throw new Error("invalid url id");
+		role._doc.urls[urlIndex].methods[req.body.method.toUpperCase()] = undefined;
+		await role.save();
+		helper.resHandler(
+			res,
+			200,
+			true,
+			role,
+			"method removed to  url successfully",
+		);
 	});
 }
 module.exports = RoleController;

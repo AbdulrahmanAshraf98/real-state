@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const { hash, validatePassword } = require("../../app/helper/crypt.helper");
 const { generateJwtToken } = require("../../app/helper/jwttoken.helper");
+const ValidateHelper = require("../../app/helper/validate.helper");
 
 const userSchema = mongoose.Schema(
 	{
@@ -13,7 +14,7 @@ const userSchema = mongoose.Schema(
 			maxLength: 20,
 			required: true,
 		},
-		lname: {
+		lName: {
 			type: String,
 			trim: true,
 			lowercase: true,
@@ -31,7 +32,8 @@ const userSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 			validate: function () {
-				if (!validator.isEmail(this.email)) throw new Error("Invalid email");
+				if (!ValidateHelper.validateEmail(this.email))
+					throw new Error("Invalid email");
 			},
 		},
 		password: {
@@ -39,13 +41,14 @@ const userSchema = mongoose.Schema(
 			lower: true,
 			trim: true,
 			required: true,
+			select: false,
 		},
 		Phone: [
 			{
 				type: String,
-				validate(value) {
-					if (!validator.isMobilePhone(value, "ar-EG"))
-						throw new Error("invalid number");
+				validate: function () {
+					if (!ValidateHelper.validatePassword(this.password))
+						throw new Error("Invalid password");
 				},
 			},
 		],
@@ -58,11 +61,15 @@ const userSchema = mongoose.Schema(
 		dOfBirth: {
 			type: Date,
 		},
-		tokens: [
-			{
-				token: { type: String, required: true },
-			},
-		],
+		profileImage: String,
+		tokens: {
+			type: [
+				{
+					token: { type: String, required: true },
+				},
+			],
+			select: false,
+		},
 		role: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Role",
@@ -70,6 +77,8 @@ const userSchema = mongoose.Schema(
 	},
 	{
 		timestamps: true,
+		toJSON: { virutals: true },
+		toOBJECT: { virutals: true },
 	},
 );
 
@@ -79,8 +88,7 @@ userSchema.pre("save", async function () {
 	}
 });
 userSchema.statics.loginUser = async (email, password) => {
-	const user = await User.findOne({ email });
-	console.log(password);
+	const user = await User.findOne({ email }).select("+password +tokens");
 	if (!user) return new Error("invalid Email");
 	if (!validatePassword(password, user.password))
 		throw new Error("invalid password");
@@ -95,10 +103,27 @@ userSchema.methods.generateToken = async function () {
 	return token;
 };
 
+userSchema.methods.generateResetToken = async function () {
+	const resetToken = crypto.randomBytes(32).toString("hex");
+	this.passwordResetToken = crypto
+		.createHash("sha256")
+		.update(resetToken)
+		.digest("hex");
+	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+	return this.passwordResetToken;
+};
+userSchema.methods.generateToken = async function () {
+	const user = this;
+	const token = generateJwtToken({ _id: user._id });
+	user.tokens.push({ token });
+	await user.save();
+	return token;
+};
+
 userSchema.methods.toJSON = function () {
 	const data = this.toObject();
 	delete data.password;
-	// delete data.tokens
+	delete data.tokens;
 	return data;
 };
 

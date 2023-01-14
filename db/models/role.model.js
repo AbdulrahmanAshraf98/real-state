@@ -21,6 +21,8 @@ const roleScheme = mongoose.Schema({
 		{
 			url: String,
 			methods: Object,
+			params: Object,
+			query: Object,
 		},
 	],
 });
