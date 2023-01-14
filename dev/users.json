@@ -3,6 +3,21 @@
 		"fName": "admin",
 		"lName": "admin123",
 		"email": "admin@odc.com",
-		"password": "Admin1@odc.com"
+		"password": "Admin1234@odc.com",
+		"role": "adminRole"
+	},
+	{
+		"fName": "employee",
+		"lName": "employee123",
+		"email": "employee@odc.com",
+		"password": "Admin1234@odc.com",
+		"role": "employeeRole"
+	},
+	{
+		"fName": "customer",
+		"lName": "customer123",
+		"email": "customer@odc.com",
+		"password": "Admin1234@odc.com",
+		"role": "customerRole"
 	}
 ]
