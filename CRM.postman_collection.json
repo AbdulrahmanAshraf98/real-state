@@ -1089,7 +1089,7 @@
 					"response": []
 				},
 				{
-					"name": "removeMethodToUrl Copy",
+					"name": "removeMethodFromUrl",
 					"request": {
 						"auth": {
 							"type": "bearer",
