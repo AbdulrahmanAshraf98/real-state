@@ -32,7 +32,7 @@ const resizeMultiImageBuffer = (dist, dirName, uniqueRequestKey, resize) =>
 				convertFileToJpeg(
 					file.buffer,
 					80,
-					`${dist}/${req.body[key]}/${newName}`,
+					`${dist}/${req.body[uniqueRequestKey]}/${newName}`,
 					resize,
 				);
 				req.body.projectImages.push(`${req.body[uniqueRequestKey]}/${newName}`);
