@@ -19,12 +19,18 @@ const resizeUserImageBuffer = (dist, dirName) =>
 		next();
 	});
 
-const resizeMultiImageBuffer = (dist, dirName, uniqueRequestKey, resize) =>
+const resizeMultiImageBuffer = (
+	dist,
+	dirName,
+	requestImagesFieldName,
+	uniqueRequestKey,
+	resize,
+) =>
 	Helper.catchAsyncError(async (req, res, next) => {
 		if (!req.files) next();
 		const dir = `public/uploads/${dirName}/${req.body[uniqueRequestKey]}`;
 		FileHelper.createDir(dir);
-		req.body.projectImages = [];
+		req.body[requestImagesFieldName] = [];
 
 		await Promise.all(
 			req.files.map(async (file, index) => {
@@ -35,7 +41,9 @@ const resizeMultiImageBuffer = (dist, dirName, uniqueRequestKey, resize) =>
 					`${dist}/${req.body[uniqueRequestKey]}/${newName}`,
 					resize,
 				);
-				req.body.projectImages.push(`${req.body[uniqueRequestKey]}/${newName}`);
+				req.body[requestImagesFieldName].push(
+					`${req.body[uniqueRequestKey]}/${newName}`,
+				);
 			}),
 		);
 		next();
