@@ -19,23 +19,24 @@ const resizeUserImageBuffer = (dist, dirName) =>
 		next();
 	});
 
-const resizeMultiImageBuffer = (dist, dirName, resize) =>
+const resizeMultiImageBuffer = (dist, dirName, key, resize) =>
 	Helper.catchAsyncError(async (req, res, next) => {
 		if (!req.files) next();
-		const dir = `public/uploads/${dirName}/${req.user._id}`;
+		console.log(req.body.name);
+		const dir = `public/uploads/${dirName}/${req.body[key]}`;
 		FileHelper.createDir(dir);
 		req.body.projectImages = [];
 
 		await Promise.all(
 			req.files.map(async (file, index) => {
-				const newName = `${req.user.id}-${index}.jpeg`;
+				const newName = `${req.body[key]}-${index}.jpeg`;
 				convertFileToJpeg(
 					file.buffer,
 					80,
-					`${dist}/${req.user._id}/${newName}`,
+					`${dist}/${req.body[key]}/${newName}`,
 					resize,
 				);
-				req.body.projectImages.push(`${req.user.id}/${newName}`);
+				req.body.projectImages.push(`${req.body[key]}/${newName}`);
 			}),
 		);
 		next();

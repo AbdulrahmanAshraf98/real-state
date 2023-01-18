@@ -8,6 +8,7 @@ const upload = uploadImageBuffer();
 const resizeProjectImage = resizeMultiImageBuffer(
 	`public/uploads/projects/`,
 	"projects",
+	"name",
 	{ width: 2000, height: 1200 },
 );
 const {

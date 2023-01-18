@@ -12,7 +12,6 @@ router.route("/login").post(AuthController.login);
 
 router.use(auth);
 
-router.route("/me").get(UserController.me);
 router.use(restrictTo("admin", "employee"));
 router
 	.route("/")
