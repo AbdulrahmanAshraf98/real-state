@@ -221,7 +221,7 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "project5",
+									"value": "project6",
 									"type": "text"
 								},
 								{
@@ -232,7 +232,12 @@
 								{
 									"key": "projectImages",
 									"type": "file",
-									"src": []
+									"src": [
+										"/home/abdoashraf/Desktop/crm-images/project_img03.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img05.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img02.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img01.jpg"
+									]
 								}
 							]
 						},
@@ -296,7 +301,18 @@
 								{
 									"key": "projectImages",
 									"type": "file",
-									"src": []
+									"src": [
+										"/home/abdoashraf/Desktop/crm-images/project_img03.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img05.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img02.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img01.jpg",
+										"/home/abdoashraf/Desktop/crm-images/project_img06.jpg"
+									]
+								},
+								{
+									"key": "name",
+									"value": "project1",
+									"type": "text"
 								}
 							]
 						},
@@ -461,6 +477,11 @@
 									"key": "buildingImages",
 									"type": "file",
 									"src": []
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
 								}
 							]
 						},
@@ -671,10 +692,9 @@
 									"src": []
 								},
 								{
-									"key": "",
+									"key": "name",
 									"value": "",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								}
 							]
 						},
