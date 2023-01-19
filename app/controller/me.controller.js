@@ -51,8 +51,14 @@ class MeController {
 			throw new Error("To Update Password You Must Using me/updatePassword");
 		if (req.body.email)
 			throw new Error("To Update email You Must Using me/updateEmail");
-		req.user._doc = { ...req.user._doc, ...req.body };
-		await req.user.save();
+		const newUserData = { ...req.user._doc, ...req.body };
+		const Building = await ModelHelper.updateOne(
+			UserModel,
+			{
+				_id: req.user._id,
+			},
+			newUserData,
+		);
 		Helper.resHandler(res, 200, true, req.user, "user updated");
 	});
 	static deleteMe = Helper.catchAsyncError(async (req, res, next) => {
