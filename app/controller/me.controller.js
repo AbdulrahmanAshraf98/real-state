@@ -11,12 +11,13 @@ class MeController {
 	static changePassword = Helper.catchAsyncError(async (req, res, next) => {
 		if (req.body.password == req.body.newPassword)
 			throw new Error("old password and new the same");
-		const user = await ModelHelper.findOne(UserModel, { _id: req.user._id });
+		const user = await  UserModel.findById({ _id: req.user._id }).select("+password")
 		if (!user) throw new AppError("there no user with this email ");
 		const validPassword = await validatePassword(
 			req.body.password,
 			user.password,
 		);
+		console.log(validPassword);
 		if (!validPassword) throw new Error("invalid password");
 		user.password = req.body.newPassword;
 		await user.save();
