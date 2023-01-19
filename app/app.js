@@ -13,8 +13,7 @@ const paymentRoutes = require("../routes/payment.routes");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.use(express.static(path.join(__dirname, "../public/uploads")));
+app.use("/api/v1/public",express.static(path.join(__dirname,'../public')));
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/me", meRoutes);
