@@ -33,6 +33,10 @@ buildingScheme.pre("save", function () {
 		this.floorNum++;
 	}
 });
+buildingScheme.pre(/^find/, function (next) {
+	this.populate({ path: "units", select: "-buildingId" });
+	next();
+});
 
 const Building = mongoose.model("Building", buildingScheme);
 module.exports = Building;

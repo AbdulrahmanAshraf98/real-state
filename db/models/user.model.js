@@ -3,6 +3,7 @@ const validator = require("validator");
 const { hash, validatePassword } = require("../../app/helper/crypt.helper");
 const { generateJwtToken } = require("../../app/helper/jwttoken.helper");
 const ValidateHelper = require("../../app/helper/validate.helper");
+var crypto = require('crypto');
 
 const userSchema = mongoose.Schema(
 	{

@@ -8,7 +8,7 @@ const {
 } = require("../app/middleware/auth.middleware");
 
 router.route("/login").post(AuthController.login);
-
+router.route("/forgetPassword").post(AuthController.forgetPassword);
 
 router.use(auth);
 

@@ -19,7 +19,7 @@ class BuildingController {
 	static getSingleBuilding = Helper.catchAsyncError(async (req, res, next) => {
 		const buildingId = Helper.getIdFromRequest(req, "buildingId");
 		if (!buildingId) throw new Error("must have a building id");
-		const Building = await ModelHelper.findAll(BuildingModel, {
+		const Building = await ModelHelper.findOne(BuildingModel, {
 			_id: buildingId,
 		});
 		if (!Building) throw new Error("Invalid user Id");

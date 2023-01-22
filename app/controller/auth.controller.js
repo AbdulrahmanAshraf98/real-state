@@ -1,6 +1,7 @@
 const UserModel = require("../../db/models/user.model");
 const RoleModel = require("../../db/models/role.model");
 const Helper = require("../helper/helper");
+const ModelHelper = require("../helper/model.helper");
 const sendEmail = require("../helper/email.helper");
 
 class AuthController {
@@ -21,7 +22,7 @@ class AuthController {
 			email: req.body.email,
 		});
 
-		if (!user) return next(new Error("there no user with this email "));
+		if (!user) throw new Error("there no user with this email ");
 		const resetToken = await user.generateResetToken();
 		const resetUrl = `${req.protocol}://${req.get(
 			"host",
@@ -59,5 +60,29 @@ class AuthController {
 		await user.save();
 		Helper.SendUserToken(user, token, "resetPassword successfully", req, res);
 	});
+      static logOut =Helper.catchAsyncError(async (req, res, next)=>{
+        try{
+            //req.user , req.token
+            req.user.tokens = req.user.tokens.filter(
+                t => t.token != req.token 
+            )
+            await req.user.save()
+            myHelper.resHandler(res, 200, true,null,"logged out")
+        }
+        catch(e){
+            myHelper.resHandler(res, 500, false, e, e.message)
+        }
+    })
+    static logOutAll = Helper.catchAsyncError(async (req, res, next)=>{
+        try{
+            //req.user , req.token
+            req.user.tokens = []
+            await req.user.save()
+            myHelper.resHandler(res, 200, true,null,"logged out")
+        }
+        catch(e){
+            myHelper.resHandler(res, 500, false, e, e.message)
+        }
+    })
 }
 module.exports = AuthController;
