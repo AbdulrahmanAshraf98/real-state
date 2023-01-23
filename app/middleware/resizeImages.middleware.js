@@ -7,7 +7,7 @@ const { convertFileToJpeg } = require("../helper/sharp.helper");
 const resizeUserImageBuffer = (dist, dirName) =>
 	Helper.catchAsyncError((req, res, next) => {
 		if (!req.file) next();
-		const newName = `user-${req.user.id}.jpeg`;
+		const newName = `user-${req.user.id}-${Date.now()}.jpeg`;
 		req.file.filename = `${req.user.id}/${newName}`;
 		const dir = `public/uploads/${dirName}/${req.user._id}`;
 		FileHelper.createDir(dir);

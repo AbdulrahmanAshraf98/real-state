@@ -16,12 +16,16 @@ class UserController {
 		Helper.resHandler(res, 200, true, user, "user fetched");
 	});
 	static addUser = Helper.catchAsyncError(async (req, res, next) => {
-		
 		if(req.user.role.type=="employee")
 		{
-			if(req.body.role.type=="admin")throw new Error("you can not create a admin user");
-			req.body.role = { type: "customer" };
+			if(req.body.roleType=="admin")throw new Error("you can not create a admin user");
+			req.body.role= {type:"customer"};
+			
 		}
+		else{
+			req.body.role={name:req.body.roleName,type:req.body.roleType}
+		}
+		
 		const role = await ModelHelper.findOne(RoleModel, req.body.role);
 		if (!role) throw new Error("this Role not found");
 		

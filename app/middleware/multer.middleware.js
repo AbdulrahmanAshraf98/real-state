@@ -11,7 +11,7 @@ const uploadImage = (dist, dirName) => {
 		},
 		filename: (req, file, cb) => {
 			const ext = file.originalname.split(".").pop();
-			const newName = `user-${req.user.id}.${ext}`;
+			const newName = `user-${req.user.id}.${Date.now()}.${ext}`;
 			cb(null, newName);
 		},
 	});
