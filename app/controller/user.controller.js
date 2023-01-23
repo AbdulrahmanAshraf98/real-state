@@ -4,7 +4,8 @@ const Helper = require("../helper/helper");
 const ModelHelper = require("../helper/model.helper");
 class UserController {
 	static allUsers = Helper.catchAsyncError(async (req, res, next) => {
-		const users = await ModelHelper.findAll(UserModel, req.body);
+		const users = await UserModel.find({}).populate({path:"role",select:"name type"});
+		
 		Helper.resHandler(res, 200, true, users, "users fetched");
 	});
 
@@ -15,8 +16,10 @@ class UserController {
 		Helper.resHandler(res, 200, true, user, "user fetched");
 	});
 	static addUser = Helper.catchAsyncError(async (req, res, next) => {
-		if (!req.body.role) {
-			req.body.role = { name: "customer" };
+		
+		if(req.user.role.type=="employee")
+		{
+			req.body.role = { type: "customer" };
 		}
 		const role = await ModelHelper.findOne(RoleModel, req.body.role);
 		if (!role) throw new Error("this Role not found");
