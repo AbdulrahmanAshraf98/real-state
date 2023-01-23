@@ -30,10 +30,15 @@ class UserController {
 		Helper.resHandler(res, 200, true, user, "user created");
 	});
 	static editUser = Helper.catchAsyncError(async (req, res) => {
+		
 		if (req.body.role) {
+			if(req.user.role.type!="admin")
+			throw new Error("admin only can edit role");
 			req.body.role = await ModelHelper.findOne(RoleModel, {
 				name: req.body.role,
 			});
+			
+			
 		}
 		const user = await ModelHelper.updateOne(
 			UserModel,

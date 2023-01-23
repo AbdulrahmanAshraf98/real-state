@@ -8,10 +8,9 @@ class AuthController {
 	static login = async (req, res) => {
 		try {
 			const user = await UserModel.loginUser(req.body.email, req.body.password);
-			// console.log(user);
 			const token = await user.generateToken();
-			Helper.SendUserToken(user, token, "user added successfully", req, res);
-			// helper.resHandler(res, 200, true, { user: userData, token });
+			Helper.SendUserToken(user, token, "user login successfully", req, res);
+			
 		} catch (error) {
 			Helper.resHandler(res, 500, false, error, error.message);
 		}
