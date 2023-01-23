@@ -19,10 +19,12 @@ class UserController {
 		
 		if(req.user.role.type=="employee")
 		{
+			if(req.body.role.type=="admin")throw new Error("you can not create a admin user");
 			req.body.role = { type: "customer" };
 		}
 		const role = await ModelHelper.findOne(RoleModel, req.body.role);
 		if (!role) throw new Error("this Role not found");
+		
 		req.body.role = role._id;
 		const user = await ModelHelper.createOne(UserModel, req.body);
 		Helper.resHandler(res, 200, true, user, "user created");
