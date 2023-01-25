@@ -78,6 +78,7 @@ class MeController {
 			},
 			{profileImage:req.file.filename},
 		);
+		if(!req.user.profileImage.includes("default-avatar"))
 		await FileHelper.removeFile(`../../public/uploads/users/${req.user.profileImage}`)
 		console.log(req.user.profileImage)
 		req.user=user;
