@@ -36,7 +36,7 @@ class PaymentController {
 			const paymentId = Helper.getIdFromRequest(req, "paymentId");
 			if (!paymentId) throw new Error("must have a payment id");
 			const payment = await getSinglePayment({ _id: paymentId });
-			payment.amountPaid += req.body.amountPaid;
+			payment.amountPaid = req.body.amountPaid;
 			await payment.save();
 			Helper.resHandler(res, 200, true, payment, "payment successfully");
 		},

@@ -122,7 +122,16 @@
 					"unitId": "unitId"
 				},
 				"query": {}
+			},
+			{
+				"url": "/api/v1/unit/sellUnit",
+				"methods": {
+					"POST": "POST"
+				},
+				"params": {},
+				"query": {}
 			}
+			
 		]
 	},
 	{
@@ -225,6 +234,14 @@
 				"params": {
 					"unitId": "unitId"
 				},
+				"query": {}
+			},
+			{
+				"url": "/api/v1/unit/sellUnit",
+				"methods": {
+					"POST": "POST"
+				},
+				"params": {},
 				"query": {}
 			}
 		]

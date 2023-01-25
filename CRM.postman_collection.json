@@ -626,7 +626,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ownerId\":\"63b14ec9a02e1abdcbe4ee9d\",\n    \"unitId\":\"63bc2319027cf15b0f4cf097\",\n    \"paymentMethod\":\"half\",\n    \"amountPaid\":1000\n}"
+							"raw": "{\n    \"ownerId\":\"63d17150896384f34cc2db84\",\n    \"unitId\":\"63c2b879db8c6355b95a0274\",\n    \"paymentMethod\":\"half\",\n    \"amountPaid\":1000\n}"
 						},
 						"url": "{{baseurl}}unit/sellUnit"
 					},
@@ -801,27 +801,6 @@
 					"response": []
 				},
 				{
-					"name": "getPaymentPdf",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{auth}}"
-							}
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{auth}}",
-								"disabled": true
-							}
-						],
-						"url": "{{baseurl}}payment/63beeca32dbf80d3485b7f4d/PaymentPdf"
-					},
-					"response": []
-				},
-				{
 					"name": "PaymentAmount",
 					"request": {
 						"auth": {
@@ -844,9 +823,30 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ownerId\":\"63b14ec9a02e1abdcbe4ee9d\",\n    \"unitId\":\"63bc2319027cf15b0f4cf097\",\n    \"paymentMethod\":\"half\",\n    \"amountPaid\":1000\n}"
+							"raw": "{\n    \"amountPaid\":500\n}"
 						},
-						"url": "{{baseurl}}unit/"
+						"url": "{{baseurl}}payment/63d172718cc4808c26f1dade/newPaymentAmount"
+					},
+					"response": []
+				},
+				{
+					"name": "getPaymentPdf",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{auth}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"disabled": true
+							}
+						],
+						"url": "{{baseurl}}payment/63beeca32dbf80d3485b7f4d/PaymentPdf"
 					},
 					"response": []
 				},
