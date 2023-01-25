@@ -32,7 +32,8 @@ router
 	);
 router
 	.route("/:paymentId/PaymentPdf")
-	.get(auth, PaymentController.sendPaymentPdf);
+	.get(auth, PaymentController.getPaymentPdf)
+	.post(auth, PaymentController.createPaymentPdf);
 router
 	.route("/:paymentId/newPaymentAmount")
 	.post(

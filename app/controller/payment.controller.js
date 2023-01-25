@@ -59,12 +59,22 @@ class PaymentController {
 		await ModelHelper.deleteOne(PaymentModel, { _id: paymentId });
 		Helper.resHandler(res, 200, true, null, "payment deleted");
 	});
-	static sendPaymentPdf = Helper.catchAsyncError(async (req, res) => {
+	static createPaymentPdf = Helper.catchAsyncError(async (req, res) => {
 		const paymentId = Helper.getIdFromRequest(req, "paymentId");
 		if (!paymentId) throw new Error("must have a payment id");
 		const payment = await getSinglePayment({ _id: paymentId });
 		await FileHelper.generateBasicPdf(payment._id, payment);
-		res.sendFile(FileHelper.getFilePath(`../../public/pdf/${payment._id}.pdf`));
+		setTimeout(() => {
+  			res.sendFile(FileHelper.getFilePath(`../../public/pdf/${payment._id}.pdf`));
+		}, 10);
+
+		
 	});
+	static getPaymentPdf = Helper.catchAsyncError(async (req, res) => {
+		const paymentId = Helper.getIdFromRequest(req, "paymentId");
+		if (!paymentId) throw new Error("must have a payment id");
+		res.sendFile(FileHelper.getFilePath(`../../public/pdf/${paymentId}.pdf`));
+	});
+	
 }
 module.exports = PaymentController;
