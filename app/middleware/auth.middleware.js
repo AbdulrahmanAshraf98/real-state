@@ -10,7 +10,7 @@ const auth = Helper.catchAsyncError(async (req, res, next) => {
 	const userData = await UserModel.findOne({
 		_id: decoded._id,
 		"tokens.token": token,
-	}).populate("role");
+	}).select("+tokens").populate("role");
 	if (!userData) throw new Error("unauthorized");
 	req.user = userData;
 	req.token = token;

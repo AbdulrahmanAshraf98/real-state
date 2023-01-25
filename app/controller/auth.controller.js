@@ -59,29 +59,19 @@ class AuthController {
 		await user.save();
 		Helper.SendUserToken(user, token, "resetPassword successfully", req, res);
 	});
-      static logOut =Helper.catchAsyncError(async (req, res, next)=>{
-        try{
-            //req.user , req.token
+      static logout =Helper.catchAsyncError(async (req, res, next)=>{
             req.user.tokens = req.user.tokens.filter(
                 t => t.token != req.token 
             )
             await req.user.save()
-            myHelper.resHandler(res, 200, true,null,"logged out")
-        }
-        catch(e){
-            myHelper.resHandler(res, 500, false, e, e.message)
-        }
+            Helper.resHandler(res, 200, true,null,"logged out")
+      
+
     })
-    static logOutAll = Helper.catchAsyncError(async (req, res, next)=>{
-        try{
-            //req.user , req.token
+    static logoutAll = Helper.catchAsyncError(async (req, res, next)=>{
             req.user.tokens = []
             await req.user.save()
-            myHelper.resHandler(res, 200, true,null,"logged out")
-        }
-        catch(e){
-            myHelper.resHandler(res, 500, false, e, e.message)
-        }
+            Helper.resHandler(res, 200, true,null,"logged out")
     })
 }
 module.exports = AuthController;
