@@ -2,6 +2,9 @@ const fs = require("fs");
 const { relative } = require("path");
 const path = require("path");
 const PDFDocument = require("pdfkit");
+const util = require('util');
+const unlinkFile=util.promisify(fs.unlink);
+
 class FileHelper {
 	static getFilePath = (relativePath) => {
 		return path.join(__dirname, relativePath);
@@ -26,5 +29,8 @@ class FileHelper {
 			throw new Error(error);
 		}
 	};
+	static removeFile=async(relativePath)=>{
+		await unlinkFile(FileHelper.getFilePath(relativePath));
+	}
 }
 module.exports = FileHelper;

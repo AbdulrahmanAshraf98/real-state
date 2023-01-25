@@ -62,7 +62,10 @@ const userSchema = mongoose.Schema(
 		dOfBirth: {
 			type: Date,
 		},
-		profileImage: String,
+		profileImage: {
+			type:String,
+			default:"default-avatar.jpg"
+		},
 		tokens: {
 			type: [
 				{

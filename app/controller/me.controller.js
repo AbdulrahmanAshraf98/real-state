@@ -4,6 +4,7 @@ const sendEmail = require("../helper/email.helper");
 const Helper = require("../helper/helper");
 const ModelHelper = require("../helper/model.helper");
 const bcryptjs = require("bcryptjs");
+const FileHelper = require("../helper/file.helper");
 class MeController {
 	static me = Helper.catchAsyncError((req, res, next) => {
 		Helper.resHandler(res, 200, true, req.user, "user fetched");
@@ -69,6 +70,7 @@ class MeController {
 		Helper.resHandler(res, 200, true, null, "user deleted ");
 	});
 	static changeProfileImage = Helper.catchAsyncError(async (req, res, next) => {
+		
 		const user = await ModelHelper.updateOne(
 			UserModel,
 			{
@@ -76,6 +78,8 @@ class MeController {
 			},
 			{profileImage:req.file.filename},
 		);
+		await FileHelper.removeFile(`../../public/uploads/users/${req.user.profileImage}`)
+		console.log(req.user.profileImage)
 		req.user=user;
 		res.status(200).json({
 			status: "success",
