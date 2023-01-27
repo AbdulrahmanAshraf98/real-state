@@ -1,4 +1,5 @@
 const UnitModel = require("../../db/models/unit.model");
+const UserModel = require("../../db/models/user.model");
 const BuildingModel = require("../../db/models/building.model");
 const PaymentModel = require("../../db/models/payment.model");
 const Helper = require("../helper/helper");
@@ -92,26 +93,31 @@ class UnitController {
 	});
 	static sellUnit = Helper.catchAsyncError(async (req, res, next) => {
 		const unitId = Helper.getIdFromRequest(req, "unitId");
-		const ownerId = Helper.getIdFromRequest(req, "ownerId");
 		if (!unitId) throw new Error("must have a unit id");
-		if (!ownerId) throw new Error("must have a user id");
+		if(!req.body.ownerEmail)throw new Error("must have a owner email");
+		const owner=await ModelHelper.findOne(UnitModel, {
+			email: req.body.ownerEmail,
+		});
+		if (!owner) throw new Error("must have a valid user email");
 		const unit = await ModelHelper.findOne(UnitModel, {
 			_id: unitId,
 		});
 
-		if (!unit) throw new Error("Invalid user Id");
-
+		if (!unit) throw new Error("Invalid unit Id");
 		unit.status = true;
-		unit.ownerId = ownerId;
+		unit.ownerId = owner._id;
 		await unit.save();
-
 		const paymentObject = {
-			...req.body,
+			paymentMethod:req.body.paymentMethod,
+			amountPaid:req.body.amountPaid,
 			unit,
-			owner: ownerId,
+			owner: owner._id,
 			employee: req.user._id,
 		};
 		const payment = await ModelHelper.createOne(PaymentModel, paymentObject);
+		if(!owner.payment)owner.payment=[];
+		owner.payment.push(payment._id);
+		await owner.save();
 		Helper.resHandler(res, 200, true, payment, "unit sell successfully");
 	});
 	static newPaymentPaidAmount = Helper.catchAsyncError(

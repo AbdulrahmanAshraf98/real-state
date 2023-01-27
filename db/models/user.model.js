@@ -78,6 +78,7 @@ const userSchema = mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Role",
 		},
+		payment:[]
 	},
 	{
 		timestamps: true,

@@ -19,6 +19,7 @@ class BuildingController {
 	static getSingleBuilding = Helper.catchAsyncError(async (req, res, next) => {
 		const buildingId = Helper.getIdFromRequest(req, "buildingId");
 		if (!buildingId) throw new Error("must have a building id");
+		
 		const Building = await ModelHelper.findOne(BuildingModel, {
 			_id: buildingId,
 		});
@@ -43,6 +44,7 @@ class BuildingController {
 	static editBuilding = Helper.catchAsyncError(async (req, res) => {
 		const buildingId = Helper.getIdFromRequest(req, "buildingId");
 		if (!buildingId) throw new Error("must have a building id");
+		if(!req.body.buildingImages.length)delete req.body.buildingImages
 		const Building = await ModelHelper.updateOne(
 			BuildingModel,
 			{
@@ -55,7 +57,9 @@ class BuildingController {
 	static deleteBuilding = Helper.catchAsyncError(async (req, res) => {
 		const buildingId = Helper.getIdFromRequest(req, "buildingId");
 		if (!buildingId) throw new Error("must have a building id");
+		console.log(buildingId);
 		const projectId = Helper.getIdFromRequest(req, "projectId");
+		
 		if (!projectId) throw new Error("must have a project id");
 		const project = await ModelHelper.findOne(ProjectModel, {
 			_id: projectId,

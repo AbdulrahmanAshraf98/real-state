@@ -301,13 +301,7 @@
 								{
 									"key": "projectImages",
 									"type": "file",
-									"src": [
-										"/home/abdoashraf/Desktop/crm-images/project_img03.jpg",
-										"/home/abdoashraf/Desktop/crm-images/project_img05.jpg",
-										"/home/abdoashraf/Desktop/crm-images/project_img02.jpg",
-										"/home/abdoashraf/Desktop/crm-images/project_img01.jpg",
-										"/home/abdoashraf/Desktop/crm-images/project_img06.jpg"
-									]
+									"src": "/home/abdoashraf/Desktop/crm-images/project_img02.jpg"
 								},
 								{
 									"key": "name",
@@ -397,7 +391,7 @@
 								},
 								{
 									"key": "name",
-									"value": "b1c2",
+									"value": "b1c8",
 									"type": "text"
 								},
 								{
@@ -408,7 +402,8 @@
 								{
 									"key": "floorNum",
 									"value": "1",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "buildingImages",
@@ -574,7 +569,7 @@
 								},
 								{
 									"key": "name",
-									"value": "u6b2",
+									"value": "u6b5",
 									"type": "text"
 								},
 								{
@@ -626,7 +621,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ownerId\":\"63d17150896384f34cc2db84\",\n    \"unitId\":\"63c2b879db8c6355b95a0274\",\n    \"paymentMethod\":\"half\",\n    \"amountPaid\":1000\n}"
+							"raw": "{\n    \"ownerEmail\":\"admin@odc.com\",\n    \"unitId\":\"63d420bb0fbc431e9fe5cd5b\",\n    \"paymentMethod\":\"half\",\n    \"amountPaid\":1000\n}"
 						},
 						"url": "{{baseurl}}unit/sellUnit"
 					},

@@ -19,7 +19,7 @@ const paymentScheme = mongoose.Schema({
 		enum: ["month", "quarter", "half", "cash"],
 		required: true,
 	},
-	numberOfYears: { type: Number, default: 0 },
+	numberOfYears: { type: Number, default: 1 },
 	amountPaid: { type: Number, default: 0 },
 	remainingAmount: { type: Number, default: 0 },
 	totalPaidAmount: { type: Number, default: 0 },
