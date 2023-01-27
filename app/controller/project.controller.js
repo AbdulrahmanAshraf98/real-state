@@ -32,8 +32,10 @@ class ProjectController {
 		Helper.resHandler(res, 200, true, project, "project created");
 	});
 	static editProject = Helper.catchAsyncError(async (req, res) => {
+		if(req.body.buildings) throw new Error("use building endpoint ");
 		const projectId = Helper.getIdFromRequest(req, "projectId");
 		if (!projectId) throw new Error("must have a project id");
+		if(!req.body.projectImages.length)delete req.body.projectImages
 		const project = await ModelHelper.updateOne(
 			ProjectModel,
 			{
@@ -41,6 +43,7 @@ class ProjectController {
 			},
 			{ updateBy: req.user._id, ...req.body },
 		);
+		
 		Helper.resHandler(res, 200, true, project, "project updated");
 	});
 	static deleteProject = Helper.catchAsyncError(async (req, res) => {
