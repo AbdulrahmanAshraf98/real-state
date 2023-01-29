@@ -38,6 +38,7 @@ class PaymentController {
 			const payment = await getSinglePayment({ _id: paymentId });
 			payment.amountPaid = req.body.amountPaid;
 			await payment.save();
+			await FileHelper.generateBasicPdf(payment._id, payment);
 			Helper.resHandler(res, 200, true, payment, "payment successfully");
 		},
 	);

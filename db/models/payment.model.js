@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const paymentScheme = mongoose.Schema({
 	unit: {
 		type: Object,
@@ -54,11 +54,9 @@ paymentScheme.pre("save", async function () {
 	}
 	if (this.remainingAmount == 0) this.requiredAmount = 0;
 });
-paymentScheme.pre(/^find/, function (next) {
+paymentScheme.pre(/^find/,  function (next) {
+	
 	this.populate({
-		path: "owner",
-		select: "fName lName email phone age",
-	}).populate({
 		path: "employee",
 		select: "fName lName email ",
 	});
@@ -73,7 +71,6 @@ paymentScheme.methods.toJSON = function () {
 	delete data.unit.createdBy;
 	delete data.unit.updatedBy;
 	delete data.unit.__v;
-	delete data.unit.ownerId;
 	return data;
 };
 const payment = mongoose.model("Payment", paymentScheme);

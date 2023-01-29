@@ -5,6 +5,8 @@ const PaymentModel = require("../../db/models/payment.model");
 const Helper = require("../helper/helper");
 const ModelHelper = require("../helper/model.helper");
 const ApiFeatures = require("../helper/api.feature");
+const FileHelper = require("../helper/file.helper");
+
 class UnitController {
 	static allUnits = Helper.catchAsyncError(async (req, res, next) => {
 		const apiFeatures = new ApiFeatures(UnitModel.find(), req.query)
@@ -105,19 +107,22 @@ class UnitController {
 
 		if (!unit) throw new Error("Invalid unit Id");
 		unit.status = true;
+		console.log(owner._id)
 		unit.ownerId = owner._id;
 		await unit.save();
 		const paymentObject = {
 			paymentMethod:req.body.paymentMethod,
 			amountPaid:req.body.amountPaid,
 			unit,
-			owner: owner._id,
+			owner:owner._id ,
 			employee: req.user._id,
 		};
 		const payment = await ModelHelper.createOne(PaymentModel, paymentObject);
+		await FileHelper.generateBasicPdf(payment._id, payment);
 		if(!owner.payment)owner.payment=[];
 		owner.payment.push(payment._id);
 		await owner.save();
+		
 		Helper.resHandler(res, 200, true, payment, "unit sell successfully");
 	});
 	static newPaymentPaidAmount = Helper.catchAsyncError(
