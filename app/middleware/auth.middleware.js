@@ -25,12 +25,18 @@ const restrictTo = (...roles) =>
 const checkPermission = Helper.catchAsyncError(async (req, res, next) => {
 	let validUrl;
 	let requestUrl = req.originalUrl;
-	const requestParamsKey = Object.keys(req.params);
-	const requestQueryKey = Object.keys(req.query);
+	let requestParamsKey;
+	let requestQueryKey;
+	requestParamsKey = Object.keys(req.params);
+	requestQueryKey = Object.keys(req.query);
+	
 	validUrl = req.user.role.urls.find((item) => {
+		
+		let requestUrl = req.originalUrl;
 		if (requestParamsKey.length > 0) {
+		
 			requestParamsKey.forEach((paramKey) => {
-				if (item.params[paramKey]) {
+				if (item.params&&item.params[paramKey]) {
 					requestUrl = requestUrl.replace(`${req.params[paramKey]}`, "");
 				}
 				requestUrl = requestUrl.replace("//", "/");
@@ -38,7 +44,7 @@ const checkPermission = Helper.catchAsyncError(async (req, res, next) => {
 		}
 		if (requestQueryKey.length > 0) {
 			requestQueryKey.forEach((queryKey) => {
-				if (item.query[queryKey]) {
+				if (item.query&&item.query[queryKey]) {
 					requestUrl = requestUrl.replace(
 						`${queryKey}=${req.query[queryKey]}`,
 						"",
@@ -48,7 +54,7 @@ const checkPermission = Helper.catchAsyncError(async (req, res, next) => {
 			requestUrl = requestUrl.replace("?", "");
 		}
 
-
+		
 		return item.url == requestUrl;
 	});
 	if (!validUrl) throw new Error("unauthorized");

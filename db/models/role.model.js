@@ -17,14 +17,17 @@ const roleScheme = mongoose.Schema({
 		default: "customer",
 		required: [true, "role name is required"],
 	},
-	urls: [
+	urls:{
+		type: [
 		{
 			url: String,
 			methods: Object,
 			params: Object,
-			query: Object,
+			querys: Object,
 		},
-	],
+		],
+		default:[]
+	},
 });
 const Role = mongoose.model("Role", roleScheme);
 module.exports = Role;

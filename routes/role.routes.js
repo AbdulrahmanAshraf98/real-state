@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require("express").Router({mergeParams:true});
 const roleController = require("../app/controller/role.controller");
 const {
 	auth,
@@ -21,6 +21,8 @@ router
 		checkPermission,
 		roleController.deleteRole,
 	);
+router.route("/:roleName/urls/").get(roleController.getRoleUrls)	
+
 router
 	.route("/:roleName/newRoleUrl")
 	.post(
@@ -28,7 +30,10 @@ router
 		restrictTo("admin"),
 		checkPermission,
 		roleController.addNewUrlToRole,
-	);
+	)
+	;
+router.route("/:roleName/removeUrlFromRole/:urlId").delete(auth,restrictTo("admin"),
+		checkPermission,roleController.removeUrlFromRole);
 router
 	.route("/:roleName/method")
 	.post(

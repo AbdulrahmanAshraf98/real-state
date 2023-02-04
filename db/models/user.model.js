@@ -95,8 +95,7 @@ userSchema.pre("save", async function () {
 userSchema.statics.loginUser = async (email, password) => {
 	const user = await User.findOne({ email }).select("+password +tokens");
 	if (!user) throw new Error("invalid Email");
-	if (!validatePassword(password, user.password))
-		throw new Error("invalid password");
+	if (!await validatePassword(password, user.password))throw new Error("invalid password");
 	return user;
 };
 
