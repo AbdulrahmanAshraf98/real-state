@@ -53,8 +53,6 @@ const checkPermission = Helper.catchAsyncError(async (req, res, next) => {
 			});
 			requestUrl = requestUrl.replace("?", "");
 		}
-
-		
 		return item.url == requestUrl;
 	});
 	if (!validUrl) throw new Error("unauthorized");
