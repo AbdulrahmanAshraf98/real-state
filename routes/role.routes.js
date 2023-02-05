@@ -46,6 +46,30 @@ router
 		auth,
 		restrictTo("admin"),
 		checkPermission,
-		roleController.removeMethodFromRole,
+		roleController.removeMethodFromRoleLink,
+	);
+router.route("/:roleName/param").post(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.addNewMethodToUrl,
+	)
+	.delete(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.removeParamFromRoleLink,
+	);
+router.route("/:roleName/query").post(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.addNewMethodToUrl,
+	)
+	.delete(
+		auth,
+		restrictTo("admin"),
+		checkPermission,
+		roleController.removeQueryFromRoleLink,
 	);
 module.exports = router;

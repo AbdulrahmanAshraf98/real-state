@@ -16,7 +16,7 @@ class RoleController {
 
 	static getSingleRole = Helper.catchAsyncError(async (req, res) => {
 		const role = await RoleModel.findOne({ name: req.params.roleName });
-		console.log(role)
+	
 		helper.resHandler(res, 200, true, role, "role fetched");
 	});
 	static addRole = Helper.catchAsyncError(async (req, res) => {
@@ -63,7 +63,18 @@ class RoleController {
 		role.save();
 		helper.resHandler(res, 200, true, "", "url add to role successfully");
 	});
-	
+	static editUrlLink=Helper.catchAsyncError(async (req, res) => {
+		const urlId = req.body.urlId;
+		const role = await RoleModel.findOne({
+			name: req.params.roleName,
+		});
+		if(!role)throw new Error("role not found");
+		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
+		if (urlIndex < 0) throw new Error("invalid url id");
+		role._doc.urls[urlIndex].link =req.body.link;
+		await RoleModel.updateOne({name: req.params.roleName},role)
+		helper.resHandler(res, 200, true, role, "method add to  url successfully");
+	});
 	static addNewMethodToUrl = Helper.catchAsyncError(async (req, res) => {
 		const urlId = req.body.urlId;
 		const role = await RoleModel.findOne({
@@ -77,17 +88,18 @@ class RoleController {
 		await role.save();
 		helper.resHandler(res, 200, true, role, "method add to  url successfully");
 	});
-	static removeMethodFromRole = Helper.catchAsyncError(async (req, res) => {
+	
+	static removeMethodFromRoleLink = Helper.catchAsyncError(async (req, res) => {
 		const urlId = req.body.urlId;
+		
 		let role = await RoleModel.findOne({
 			name: req.params.roleName,
 		});
-		if(!role)throw new Error("role not found");
-		console.log(role)
+		if(!role)throw new Error("role not found");	
 		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
 		if (urlIndex < 0) throw new Error("invalid url id");
-		delete role._doc.urls[urlIndex].methods[req.body.method.toUpperCase()];
-		await role.save();	
+		delete role._doc.urls[urlIndex]._doc.methods[req.body.method.toUpperCase()];
+		await RoleModel.updateOne({name: req.params.roleName},role)
 		helper.resHandler(
 			res,
 			200,
@@ -96,6 +108,46 @@ class RoleController {
 			"method removed to  url successfully",
 		);
 	});
+	static removeParamFromRoleLink = Helper.catchAsyncError(async (req, res) => {
+		const urlId = req.body.urlId;
+		
+		let role = await RoleModel.findOne({
+			name: req.params.roleName,
+		});
+		if(!role)throw new Error("role not found");	
+		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
+		if (urlIndex < 0) throw new Error("invalid url id");
+		console.log(role._doc.urls[urlIndex]._doc.params[req.body.param])
+		delete role._doc.urls[urlIndex]._doc.params[req.body.param];
+		await RoleModel.updateOne({name: req.params.roleName},role)
+		helper.resHandler(
+			res,
+			200,
+			true,
+			role,
+			"param removed to  url successfully",
+		);
+	});
+	static removeQueryFromRoleLink = Helper.catchAsyncError(async (req, res) => {
+		const urlId = req.body.urlId;
+		
+		let role = await RoleModel.findOne({
+			name: req.params.roleName,
+		});
+		if(!role)throw new Error("role not found");	
+		const urlIndex = ArrayHelper.getIndexOfObject(role._doc.urls, "_id", urlId);
+		if (urlIndex < 0) throw new Error("invalid url id");
+		delete role._doc.urls[urlIndex]._doc.querys[req.body.query];
+		await RoleModel.updateOne({name: req.params.roleName},role)
+		helper.resHandler(
+			res,
+			200,
+			true,
+			role,
+			"method removed to  url successfully",
+		);
+	});
+	
 	static removeUrlFromRole = Helper.catchAsyncError(async (req, res) => {
 		const urlId = req.params.urlId;
 		const role = await RoleModel.findOne({
